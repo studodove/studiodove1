@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Dove — Design that feels. Copy that sells.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E2C47A;
+    --gold-dim: #8A6E30;
+    --black: #0A0A0A;
+    --surface: #111111;
+    --surface2: #181818;
+    --off-white: #F0EBE0;
+    --muted: #888880;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 0.5px solid var(--gold);
+    padding: 0.6rem 1.4rem;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 0.5px solid rgba(201,168,76,0.4);
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-logo-ring {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.1s forwards;
+    position: relative;
+  }
+  .hero-logo-ring::before {
+    content: '';
+    position: absolute; inset: 6px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(201,168,76,0.3);
+  }
+  .hero-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--off-white);
+    margin-bottom: 0.2em;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta-group {
+    display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-gold {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-gold:hover { background: var(--gold-light); }
+
+  .btn-outline {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 0.5px solid var(--gold);
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); }
+
+  .hero-divider {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+  .hero-divider span { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+  .hero-divider-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent); }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--off-white);
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .gold-line {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .about-text p {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+  .about-text p strong { color: var(--off-white); font-weight: 400; }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .stat-card {
+    border: 0.5px solid rgba(201,168,76,0.2);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: var(--surface);
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* ─── SERVICES ─── */
+  .services-section { background: var(--surface); }
+  .services-inner { max-width: 1100px; margin: 0 auto; }
+  .services-header { text-align: center; margin-bottom: 4rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 0.5px solid rgba(201,168,76,0.2); }
+  .service-card {
+    padding: 3rem 2.5rem;
+    border-right: 0.5px solid rgba(201,168,76,0.2);
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card:last-child { border-right: none; }
+  .service-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+    transform-origin: left;
+  }
+  .service-card:hover { background: rgba(201,168,76,0.04); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: rgba(201,168,76,0.15);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+  }
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--off-white);
+    margin-bottom: 1rem;
+  }
+  .service-desc { font-size: 0.8rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.5rem; }
+  .service-link {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .service-link::after { content: '→'; transition: transform 0.3s; }
+  .service-link:hover::after { transform: translateX(4px); }
+
+  /* ─── BEFORE/AFTER ─── */
+  .ba-section { max-width: 1100px; margin: 0 auto; }
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 4rem; }
+  .ba-card {
+    border: 0.5px solid rgba(201,168,76,0.2);
+    overflow: hidden;
+  }
+  .ba-label-row { display: flex; }
+  .ba-tag {
+    flex: 1; text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.7rem;
+    border-bottom: 0.5px solid rgba(201,168,76,0.2);
+  }
+  .ba-tag.before { color: var(--muted); background: var(--surface2); border-right: 0.5px solid rgba(201,168,76,0.2); }
+  .ba-tag.after { color: var(--gold); background: rgba(201,168,76,0.08); }
+  .ba-content { display: grid; grid-template-columns: 1fr 1fr; }
+  .ba-col { padding: 2rem 1.5rem; }
+  .ba-col.before-col { border-right: 0.5px solid rgba(201,168,76,0.2); background: var(--surface2); }
+  .ba-col.after-col { background: rgba(201,168,76,0.03); }
+  .ba-point {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+  .ba-point.bad { color: var(--muted); }
+  .ba-point.bad::before { content: '✕'; color: #c44; font-size: 0.7rem; margin-top: 0.1rem; flex-shrink: 0; }
+  .ba-point.good { color: var(--off-white); }
+  .ba-point.good::before { content: '✓'; color: var(--gold); font-size: 0.7rem; margin-top: 0.1rem; flex-shrink: 0; }
+
+  /* ─── PROCESS ─── */
+  .process-section { background: var(--surface); }
+  .process-inner { max-width: 1100px; margin: 0 auto; }
+  .process-header { margin-bottom: 4rem; }
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 2.5rem; left: 12%; right: 12%;
+    height: 0.5px; background: rgba(201,168,76,0.25);
+  }
+  .process-step { text-align: center; padding: 0 1.5rem; }
+  .step-num {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 0.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--gold);
+    background: var(--surface);
+    position: relative; z-index: 1;
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--off-white);
+    margin-bottom: 0.75rem;
+  }
+  .step-desc { font-size: 0.75rem; line-height: 1.7; color: var(--muted); }
+
+  /* ─── CTA BANNER ─── */
+  .cta-banner {
+    background: var(--gold);
+    padding: 5rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: 'STUDIO DOVE';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12rem;
+    font-weight: 300;
+    color: rgba(0,0,0,0.06);
+    white-space: nowrap;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 0.2em;
+    pointer-events: none;
+  }
+  .cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--black);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .cta-banner p {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.6);
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .btn-dark {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--off-white);
+    background: var(--black);
+    padding: 1.1rem 3rem;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .btn-dark:hover { background: #1a1a1a; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; }
+  .testi-card {
+    border: 0.5px solid rgba(201,168,76,0.2);
+    padding: 2.5rem;
+    background: var(--surface);
+    text-align: left;
+  }
+  .testi-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--off-white);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .testi-author { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .testi-role { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.2rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--surface);
+    border-top: 0.5px solid rgba(201,168,76,0.15);
+    padding: 4rem 3rem 2rem;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .footer-tagline { font-size: 0.8rem; line-height: 1.8; color: var(--muted); }
+  .footer-col h4 { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.75rem; }
+  .footer-col ul li a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .footer-col ul li a:hover { color: var(--off-white); }
+  .footer-bottom {
+    border-top: 0.5px solid rgba(201,168,76,0.1);
+    padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+  .footer-social { display: flex; gap: 1.5rem; }
+  .footer-social a { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .footer-social a:hover { color: var(--gold); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { border-right: none; border-bottom: 0.5px solid rgba(201,168,76,0.2); }
+    .ba-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .process-steps::before { display: none; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Studio Dove</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">DM "DOVE"</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-logo-ring">
+    <div class="hero-logo-text">STUDIO<br>DOVE</div>
+  </div>
+  <div class="hero-badge">Est. 2025 &nbsp;·&nbsp; London</div>
+  <h1>Design that <em>feels.</em><br>Copy that sells.</h1>
+  <p class="hero-sub">Built for modern brands who refuse to blend in</p>
+  <div class="hero-cta-group">
+    <a href="#contact" class="btn-gold">Work with us</a>
+    <a href="#services" class="btn-outline">Explore services</a>
+  </div>
+  <div class="hero-divider">
+    <span>Scroll</span>
+    <div class="hero-divider-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about reveal">
+    <div class="about-text">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Your brand deserves<br><em>better than basic.</em></h2>
+      <div class="gold-line"></div>
+      <p>Studio Dove is a boutique creative studio specialising in <strong>minimal websites</strong> and <strong>high-converting copy</strong> for ambitious brands ready to elevate their presence.</p>
+      <p>We believe great design isn't decoration — it's strategy. Every pixel, every word is crafted with intention. The result? Brands that stop the scroll and start the sale.</p>
+      <a href="#contact" class="btn-outline" style="margin-top:1rem;">Let's talk →</a>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Custom design</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">48h</div>
+        <div class="stat-label">Turnaround</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3×</div>
+        <div class="stat-label">Conversion lift</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Revisions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="services-inner reveal">
+    <div class="services-header">
+      <p class="section-label">What we do</p>
+      <h2 class="section-title">Services built to<br><em>move the needle</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-title">Website Design</div>
+        <p class="service-desc">Minimal, high-converting websites that position your brand as the premium choice. Built for speed, beauty, and results.</p>
+        <a href="#contact" class="service-link">Get started</a>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-title">Brand Copy</div>
+        <p class="service-desc">Words that sell without feeling salesy. From homepage headlines to full brand voice guides — copy that converts.</p>
+        <a href="#contact" class="service-link">Get started</a>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-title">Brand Identity</div>
+        <p class="service-desc">Logo, colour palette, typography, and visual direction — everything your brand needs to look unmistakably you.</p>
+        <a href="#contact" class="service-link">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section id="work">
+  <div class="ba-section reveal">
+    <p class="section-label">The transformation</p>
+    <h2 class="section-title">The Studio Dove<br><em>difference</em></h2>
+    <div class="gold-line"></div>
+
+    <div class="ba-grid">
+      <div class="ba-card">
+        <div class="ba-label-row">
+          <div class="ba-tag before">Before</div>
+          <div class="ba-tag after">After</div>
+        </div>
+        <div class="ba-content">
+          <div class="ba-col before-col">
+            <div class="ba-point bad">Weak, generic headline</div>
+            <div class="ba-point bad">Cluttered design</div>
+            <div class="ba-point bad">No clear CTA</div>
+            <div class="ba-point bad">Template that looks like everyone else</div>
+          </div>
+          <div class="ba-col after-col">
+            <div class="ba-point good">Magnetic, benefit-led headline</div>
+            <div class="ba-point good">Clean, intentional layout</div>
+            <div class="ba-point good">Clear path to conversion</div>
+            <div class="ba-point good">A brand that owns the room</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ba-card">
+        <div class="ba-label-row">
+          <div class="ba-tag before">Your website isn't converting</div>
+          <div class="ba-tag after">Here's why</div>
+        </div>
+        <div class="ba-content">
+          <div class="ba-col before-col" style="grid-column: 1/-1;">
+            <div class="ba-point bad">Visitors don't know what you do in 3 seconds</div>
+            <div class="ba-point bad">Copy focuses on features, not feelings</div>
+            <div class="ba-point bad">No social proof above the fold</div>
+            <div class="ba-point bad">Design built by you, not for your client</div>
+            <br>
+            <a href="#contact" class="service-link">Fix this with Studio Dove</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="process-inner reveal">
+    <div class="process-header">
+      <p class="section-label">How it works</p>
+      <h2 class="section-title">From brief to<br><em>brilliant</em></h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">I</div>
+        <div class="step-title">Discovery</div>
+        <p class="step-desc">We learn your brand, audience, and goals. Deep dive, no fluff.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">II</div>
+        <div class="step-title">Strategy</div>
+        <p class="step-desc">We map the creative direction — visual identity, copy tone, conversion goals.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">III</div>
+        <div class="step-title">Creation</div>
+        <p class="step-desc">Design and copy delivered in 48 hours. Premium quality, fast turnaround.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">IV</div>
+        <div class="step-title">Elevate</div>
+        <p class="step-desc">Revisions until it's perfect. You launch with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="testimonials-inner reveal">
+    <p class="section-label">Kind words</p>
+    <h2 class="section-title">What our clients say</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">"Studio Dove completely transformed how my brand looks online. I went from embarrassed to share my website to sending it to everyone."</p>
+        <div class="testi-author">Sarah M.</div>
+        <div class="testi-role">Founder, lifestyle brand</div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"The copy they wrote for my homepage doubled my enquiry rate in the first month. Worth every penny and then some."</p>
+        <div class="testi-author">James T.</div>
+        <div class="testi-role">Creative agency owner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner" id="contact">
+  <h2>Ready to elevate<br>your presence?</h2>
+  <p>DM "DOVE" on Instagram to get started</p>
+  <a href="https://instagram.com/thestudiodove" class="btn-dark" target="_blank">DM us on Instagram</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Studio Dove</div>
+        <p class="footer-tagline">Design that feels.<br>Copy that sells.<br>Built for modern brands.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Website Design</a></li>
+          <li><a href="#services">Brand Copy</a></li>
+          <li><a href="#services">Brand Identity</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://instagram.com/thestudiodove" target="_blank">Instagram</a></li>
+          <li><a href="#contact">Start a project</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Studio Dove. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://instagram.com/thestudiodove" target="_blank">@thestudiodove</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
